@@ -59,6 +59,12 @@ export const usersSlice = createSlice({
       deleteUserById: (state, action: PayloadAction<UserId>)=>{
         const id = action.payload;
         return state.filter(user=> user.id !== id)
+      },
+      roolbackUser: (state, action: PayloadAction<userWithId>)=>{
+        const isUserAlreadyDefined = state.some(user=> user.id === action.payload.id) 
+        if(!isUserAlreadyDefined){
+          return [...state, action.payload]
+        }
       }
     }
 }
@@ -67,4 +73,4 @@ export const usersSlice = createSlice({
 export default usersSlice.reducer
 //lo unico que necesitamos importar es el reducer de este estado, ya que la store la obtenemos de provider
 
-export const  { deleteUserById, addNewUser } = usersSlice.actions
+export const  {roolbackUser, deleteUserById, addNewUser } = usersSlice.actions
